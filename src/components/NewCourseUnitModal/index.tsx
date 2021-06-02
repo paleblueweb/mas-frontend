@@ -15,7 +15,7 @@ interface NewCourseUnitData {
 
 export function NewCourseUnitModal({isOpen, onRequestClose}:NewCourseUnitModalProps){
 
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm<NewCourseUnitData>();
 
     const onSubmit = handleSubmit(data => alert(JSON.stringify(data)))
 
