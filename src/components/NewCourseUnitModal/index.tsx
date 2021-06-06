@@ -1,7 +1,9 @@
+import React from 'react';
 import Modal from 'react-modal';
 import {useForm} from 'react-hook-form';
 import {FiX} from 'react-icons/fi'
 import { Container, Error } from './styles';
+import api from '../../services/api';
 
 interface NewCourseUnitModalProps {
     isOpen: boolean;
@@ -17,7 +19,7 @@ export function NewCourseUnitModal({isOpen, onRequestClose}:NewCourseUnitModalPr
 
     const {register, handleSubmit, formState: {errors}} = useForm<NewCourseUnitData>();
 
-    const onSubmit = handleSubmit(data => alert(JSON.stringify(data)))
+    const onSubmit = handleSubmit(data => api.post('/courseunit', data).then(response => alert(response.data)));
 
     return (
         <Modal
@@ -41,13 +43,13 @@ export function NewCourseUnitModal({isOpen, onRequestClose}:NewCourseUnitModalPr
                         placeholder="Nome"
                         {...register("name", {required:true})}
                     />
-                    {errors.courseUnit && <Error>O preenchimento do campo é obrigatório</Error>}
+                    {errors.name && <Error>O preenchimento do campo é obrigatório</Error>}
                     <input 
                         type="text"
                         placeholder="Descricao"  
                         {...register("description", {required:true})}  
                     />
-                    {errors.activity && <Error>O preenchimento do campo é obrigatório</Error>}
+                    {errors.description && <Error>O preenchimento do campo é obrigatório</Error>}
 
 
                     <button type="submit">

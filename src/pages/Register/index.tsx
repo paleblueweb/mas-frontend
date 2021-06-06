@@ -1,8 +1,9 @@
-import {FiLogIn, FiMail, FiLock, FiUser, FiArrowLeft} from 'react-icons/fi';
-import { Link } from "react-router-dom";
-import { useForm } from 'react-hook-form';
+import {Container,Content,FormContainer, InputContainer, Error, Background} from './styles';
+import {FiArrowLeft, FiMail, FiLock, FiUser} from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form'
 import { Button } from '../../components/Button';
-import {Container, Content, FormContainer, InputContainer, Error, Background} from './styles';
+import api from '../../services/api';
 
 interface FormData {
     name: string,
@@ -12,10 +13,11 @@ interface FormData {
 
 export function Register(){
 
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
 
-    const onSubmit = handleSubmit(data => alert(JSON.stringify(data))) 
+    const history = useHistory()
 
+    const onSubmit = handleSubmit(data => api.post('/user', data).then(() => history.push('/')));
     return (
         <Container>
             <Content>
@@ -27,7 +29,7 @@ export function Register(){
                             <input 
                                 type="text"
                                 placeholder="Nome"
-                                {...register("nome", {required:true})}
+                                {...register("name", {required:true})}
                             />
                         </InputContainer>
                         {errors.name && <Error>Preenchimento do campo é obrigatório</Error>}

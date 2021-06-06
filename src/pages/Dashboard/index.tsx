@@ -20,16 +20,19 @@ export function Dashboard(){
     }
 
     function handleCloseActivityModal(){
-
+        setNewActivityModalOpen(false);
     }
 
     function handleCloseCourseUnitModal(){
-
+        setNewActivityModalOpen(false);
     }
 
     return (
         <>
-            <Header/>
+            <Header
+                onOpenNewActivityModal={handleOpenActivityModal}
+                onOpenNewCourseUnitModal={handleOpenCourseUnitModal}
+            />
             <Container>
                 <Summary/>
                 <ActivityTable/>
