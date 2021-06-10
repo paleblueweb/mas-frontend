@@ -1,6 +1,30 @@
-import {Container} from './styles';
+import { useEffect, useState } from 'react';
+import {format, parseISO} from 'date-fns'
+import { Container } from './styles';
+import api from '../../services/api';
+
+interface CourseUnit {
+    name: string;
+}
+
+interface Activity {
+    id: string;
+    name: string;
+    grade: number;
+    activity_date: string;
+    course_unit: CourseUnit
+}
 
 export function ActivityTable(){
+
+    const [activities, setActivities] = useState<Activity[]>([])
+
+    useEffect(() => {
+
+        api.get('/activity')
+            .then(response => setActivities(response.data))
+    },[])
+
     return (
         <Container>
             <table>
